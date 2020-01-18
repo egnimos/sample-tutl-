@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/subject_model.dart';
+// import '../models/subject_model.dart';
 import '../widgets/subjects_topic_item_list.dart';
 // import '../providers/subject_provider.dart';
 import '../providers/subject_topics_provider.dart';
+import '../providers/subject_topics.dart';
 
 
 
@@ -23,7 +24,11 @@ class SubjectTopicsScreen extends StatelessWidget {
 
     // final subData = Provider.of<SubjectProvider>(context).halfList.firstWhere((sub) => sub.id == subId);
 
-    final topicsData = Provider.of<SubjectTopicsProvider>(context).topics.where((topic) => topic.subId == courseId ).toList();
+    final topicsData = Provider.of<SubjectTopicsProvider>(context).topicsQuizs.where((topic) => topic.subId == courseId ).toList();
+
+    final quizList = topicsData.where((tp) => tp.type == CourseType.Quiz).toList();
+
+    final topicList = topicsData.where((tp) => tp.type == CourseType.Quiz).toList();
 
 
 
@@ -102,9 +107,9 @@ class SubjectTopicsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
 
-                      buildContainerAboutSubjectInfo(courseColor, '29 hours'),
-                      buildContainerAboutSubjectInfo(courseColor, '249 topics'),
-                      buildContainerAboutSubjectInfo(courseColor, '15 quizes'),
+                      // buildContainerAboutSubjectInfo(courseColor, '29 hours'),
+                      buildContainerAboutSubjectInfo(courseColor, '${topicList.length} Courses'),
+                      buildContainerAboutSubjectInfo(courseColor, '${quizList.length} Quizes.'),
                     ],
                   ),
             ),

@@ -21,12 +21,16 @@ class SubjectsTopicItem extends StatelessWidget {
 
 
 
-  void selectedTopics(BuildContext ctx, id) {
+  void selectedTopics(BuildContext ctx, id, type) {
      Navigator.of(ctx).pushNamed(
 
       SubjectTopicContentScreen.routeName,
 
-      arguments: id
+      arguments: {
+        'id' : id,
+        'type': type,
+
+      }
     );
 
     print(id);
@@ -41,7 +45,7 @@ class SubjectsTopicItem extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: ListTile(
 
-        onTap: () => selectedTopics(context, topicData.id),
+        onTap: () => selectedTopics(context, topicData.id, topicData.type),
 
         leading: CircleAvatar(
           backgroundColor: color,
