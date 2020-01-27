@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample/models/subject_model.dart';
-
-import '../screens/joined_courses_list_screen.dart';
 import '../providers/joined_courses.dart';
+
 import '../providers/subject_provider.dart';
 
 
@@ -19,8 +17,6 @@ class SubjectInfoScreen extends StatelessWidget {
     final subId = ModalRoute.of(context).settings.arguments;
 
     final subData = Provider.of<SubjectProvider>(context, listen: false).findById(subId);
-
-    // final scaffold = Scaffold.of(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -61,10 +57,37 @@ class SubjectInfoScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height - 250,
-              color: Colors.black54
+              color: Colors.black87
             ),
 
-            JoinCourseButtonWidget(subData: subData),
+             Positioned(
+                top: 150,
+                left: 90,
+                      child: Container(
+                        alignment: Alignment.center,
+                      padding: EdgeInsets.all(15),
+                      child: Consumer<Courses>(
+                        builder: (_, courses, child) =>  RaisedButton(
+                        padding: EdgeInsets.all(15),
+                        child: const Text('Join course', style: TextStyle(color: Colors.white ,fontSize: 15),),
+                        color: subData.color,
+                        hoverColor: subData.color,
+                        elevation: 6,
+                        hoverElevation: 1,
+                        
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        onPressed: () {
+                          courses.addCourses(subData.id, subData.title, subData.imageUrl, subData.color, subData.content, 1);
+                          
+                        },
+                      ),
+                      ), 
+                     
+                    ),
+              ),
+        
 
             Padding(
               padding: EdgeInsets.only(
@@ -116,8 +139,6 @@ class SubjectInfoScreen extends StatelessWidget {
 
                 child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      // crossAxisAlignment: CrossAxis,
                     children: <Widget>[
 
                       Padding(
@@ -151,13 +172,7 @@ class SubjectInfoScreen extends StatelessWidget {
                           ),
                       ),
 
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-
-                           Container(
+                      Container(
                         padding: EdgeInsets.only(
                           top: 10,
                           bottom: 5,
@@ -195,11 +210,6 @@ class SubjectInfoScreen extends StatelessWidget {
                            ),
                         ),
                       )
-
-                        ],
-                      ),
-
-                     
 
                     ],
                     
@@ -248,87 +258,4 @@ class SubjectInfoScreen extends StatelessWidget {
   }
 
 
-}
-
-
-//Joined courses button widget used in the subject info screen
-class JoinCourseButtonWidget extends StatelessWidget {
-  const JoinCourseButtonWidget({
-    Key key,
-    @required this.subData,
-  }) : super(key: key);
-
-  final SubjectModel subData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: 150,
-           
-            child: Container(
-              width: MediaQuery.of(context).size.width - 5,
-              alignment: Alignment.center,
-            padding: EdgeInsets.all(15),
-            child: Consumer<Courses>(
-              builder: (_, courses, child) =>  RaisedButton(
-              padding: EdgeInsets.all(15),
-              child: const Text('Join course', style: TextStyle(color: Colors.white ,fontSize: 15),),
-              color: subData.color,
-              hoverColor: subData.color,
-              elevation: 6,
-              hoverElevation: 1,
-              
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
-              ),
-              onPressed: () {
-                if (courses.courses.containsKey(subData.id)) {
-                  Scaffold.of(context).showSnackBar(
-
-                  SnackBar(
-                    content: Text('This course is already added in the Joined courses list'),
-                    duration: Duration(seconds: 5),
-                    // animation: Animation.,
-                    action: SnackBarAction(
-                      label: 'See the list',
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          JoinedCoursesListScreen.routeName,
-                        );
-                      },
-                    ),
-                  ),
-                );
-
-                } else {
-
-                  Scaffold.of(context).showSnackBar(
-
-                  SnackBar(
-                    content: Text('New course is added'),
-                    duration: Duration(seconds: 5),
-                    // animation: Animation.,
-                    action: SnackBarAction(
-                      label: 'See the list',
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          JoinedCoursesListScreen.routeName,
-                        );
-                      },
-                    ),
-                  ),
-                );
-
-                }
-                
-                courses.addCourses(subData.id, subData.title, subData.imageUrl, subData.color, subData.content, 1);
-
-                
-              },
-            ),
-            ), 
-           
-          ),
-    );
-  }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample/dummy/dummy_material_topics_content_detail.dart';
+import '../dummy/dummy_material_topics_content_detail.dart';
 
 import './subject_topics_units_model.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample/providers/subject_topics.dart';
+import '../providers/subject_topics.dart';
 
 import './subjects_topic_item.dart';
 // import '../providers/subject_topics_provider.dart';

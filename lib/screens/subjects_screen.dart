@@ -17,18 +17,52 @@ class SubjectsScreen extends StatefulWidget {
 }
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
+
   ScrollController _controller = ScrollController();
+
+  var _isInit = true;
+  var _isLoading = false;
+
+  Future<void> _fetchData(BuildContext context) async {
+    await Provider.of<SubjectProvider>(context, listen: false).fetchAndSetProducts();
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      _fetchData(context).then((_) {
+        _isLoading = false;
+      });
+      
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
 
-    final subjects = Provider.of<SubjectProvider>(context).subjects;
-    final frameworks = Provider.of<SubjectProvider>(context).frameworks;
-    final coreConcepts = Provider.of<SubjectProvider>(context).coreConcepts;
+    final halfData = Provider.of<SubjectProvider>(context).halfList;
 
-    return  SingleChildScrollView(
+    final subjects = halfData.where((sub) => sub.type == SubjectType.ProgrammingLanguage).toList();
+    final frameworks = halfData.where((fra) => fra.type == SubjectType.FrameWork).toList();
+    final coreConcepts = halfData.where((fra) => fra.type == SubjectType.CoreConcepts).toList();
+
+    return _isLoading ? Center(
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.purple,
+      ),
+    ) : SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+
         children: <Widget>[
 
           buildContainerHeading('Programming Language'),

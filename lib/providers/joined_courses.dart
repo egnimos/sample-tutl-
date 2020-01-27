@@ -56,10 +56,5 @@ class Courses with ChangeNotifier {
     }
     notifyListeners();
   }
-
-  void removeJoinedCourse(String subjectId) {
-    _courses.remove(subjectId);
-    notifyListeners();
-  }
   
 }

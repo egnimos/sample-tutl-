@@ -10,7 +10,7 @@ class SubjectTopicsProvider with ChangeNotifier {
   List<SubjectTopics> _quiz = dummyMaterialSubjectQuiz;
 
 
-  List<SubjectTopics> get topicsQuizs {
+  List<SubjectTopics> get topics {
     // return [..._topics];
     List<dynamic> _quizTopics = [];
 

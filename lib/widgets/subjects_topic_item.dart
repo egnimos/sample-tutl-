@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample/screens/subject_topic_content_screen.dart';
+import '../screens/subject_topic_content_screen.dart';
 
 import '../providers/subject_topics.dart';
 
@@ -21,16 +21,12 @@ class SubjectsTopicItem extends StatelessWidget {
 
 
 
-  void selectedTopics(BuildContext ctx, id, type) {
+  void selectedTopics(BuildContext ctx, id) {
      Navigator.of(ctx).pushNamed(
 
       SubjectTopicContentScreen.routeName,
 
-      arguments: {
-        'id' : id,
-        'type': type,
-
-      }
+      arguments: id
     );
 
     print(id);
@@ -45,7 +41,7 @@ class SubjectsTopicItem extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: ListTile(
 
-        onTap: () => selectedTopics(context, topicData.id, topicData.type),
+        onTap: () => selectedTopics(context, topicData.id),
 
         leading: CircleAvatar(
           backgroundColor: color,

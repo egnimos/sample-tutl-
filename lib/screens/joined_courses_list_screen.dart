@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample/providers/joined_courses.dart';
-import 'package:sample/widgets/joined_courses_item.dart';
+import '../providers/joined_courses.dart';
+import '../widgets/joined_courses_item.dart';
 
 
 
@@ -42,8 +42,7 @@ class JoinedCoursesListScreen extends StatelessWidget {
         child: Consumer<Courses>(
           builder: (context, subject, _) => ListView.builder(
           itemBuilder: (ctx, i) => JoinedCoursesItem(
-            subject.courses.values.toList()[i].courseId,
-            subject.courses.keys.toList()[i], 
+            subject.courses.values.toList()[i].courseId, 
             subject.courses.values.toList()[i].title, 
             subject.courses.values.toList()[i].imageUrl, 
             subject.courses.values.toList()[i].color,
